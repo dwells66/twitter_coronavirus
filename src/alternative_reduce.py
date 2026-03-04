@@ -17,7 +17,6 @@ from collections import defaultdict
 from datetime import datetime
 import matplotlib.pyplot as plt
 
-# ---- Combine Files ----
 results = defaultdict(dict)
 
 for pattern in args.input_paths:
@@ -31,9 +30,6 @@ for pattern in args.input_paths:
         filename = os.path.basename(path)
 
         match = re.search(r'geoTwitter20-(\d{2}-\d{2})\.zip\.lang', filename)
-        if not match:
-            print(f"Skipping file (no date found): {filename}")
-            continue
 
         date = "2020-" + match.group(1)
 
@@ -53,8 +49,6 @@ with open(args.output_path, 'w') as f:
     json.dump(results, f, ensure_ascii=False, indent=2)
 
 # ---- Plot ----
-plt.rcParams['axes.unicode_minus'] = False
-
 plt.figure(figsize=(10, 6))
 
 for hashtag, date_counts in results.items():
@@ -72,8 +66,8 @@ for hashtag, date_counts in results.items():
 
 if results:
     plt.xlabel("Day of Year")
-    plt.ylabel("Hashtag Frequency")
-    plt.title("Hashtag Frequency Relating to COVID-19 over 2020")
+    plt.ylabel("Hashtag Count")
+    plt.title("Hashtag Count Relating to COVID-19 over 2020")
     plt.legend()
     plt.grid(True)
     ax = plt.gca()
