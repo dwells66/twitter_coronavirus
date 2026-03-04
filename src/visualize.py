@@ -24,5 +24,24 @@ if args.percent:
 
 # print the count values
 items = sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), reverse=True)
+items_k = []
+items_v = []
+
 for k,v in items:
-    print(k,':',v)
+    #print(k,':',v)
+    items_k.append(k)
+    items_v.append(v)
+
+items_k = items_k[0:10]
+items_v = items_v[0:10]
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+plt.bar(items_k, items_v)
+
+plt.xlabel("Languages")
+plt.ylabel("Frequency")
+plt.title("Languages of 2020 Tweets Containing #coronavirus")
+
+plt.savefig('lang_coronavirus.png', bbox_inches='tight', dpi=300)
